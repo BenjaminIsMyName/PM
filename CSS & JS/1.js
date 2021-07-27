@@ -118,6 +118,7 @@ function showMenu() {
 addEventListener("resize", reportWindowSize);
 
 function reportWindowSize() {
+  console.log("resized")
   // if it got resize to a big screen, show the old big menu again (even if we hide it before from the small menu button!):
   if (innerWidth > 1300 && innerHeight > 550)
     document.querySelector("aside").style.display = "block";
@@ -126,7 +127,7 @@ function reportWindowSize() {
     document.querySelector("aside").style.display = "none";
   }
   // after the resize was made, update everything (find top article etc)
-  setTimeout(fadeUp, 50);
+  setTimeout(fadeUp, 100);
 }
 
 // toggle dark and light theme (called by onclick):
