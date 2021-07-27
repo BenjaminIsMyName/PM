@@ -118,7 +118,6 @@ function showMenu() {
 addEventListener("resize", reportWindowSize);
 
 function reportWindowSize() {
-  console.log("resized")
   // if it got resize to a big screen, show the old big menu again (even if we hide it before from the small menu button!):
   if (innerWidth > 1300 && innerHeight > 550)
     document.querySelector("aside").style.display = "block";
