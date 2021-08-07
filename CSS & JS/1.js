@@ -136,10 +136,22 @@ function theme() {
   ball.classList.toggle("night");
   // change the theme, add to body the "dark" class
   document.querySelector("body").classList.toggle("dark");
-}
 
-// check if the prefers-color-scheme is dark. if so, call the "theme" function to change the theme
-if (matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) theme();
+  if (document.body.classList.contains("dark"))
+    localStorage.setItem("darkMode", 1);
+  else localStorage.setItem("darkMode", 0);
+}
+// gwt localStorage item for 'darkMode'
+var darkMode = localStorage.getItem("darkMode");
+// if localStorage was set to 1 (dark mode on), change to dark mode
+if (darkMode == 1) theme();
+// if no localStorage was set - check if the prefers-color-scheme is dark. if so, call the "theme" function to change the theme
+else if (
+  darkMode != 0 &&
+  matchMedia &&
+  matchMedia("(prefers-color-scheme: dark)").matches
+)
+  theme();
 
 // event listener to update the prefers-color-scheme changes:
 matchMedia("(prefers-color-scheme: dark)").addEventListener(
