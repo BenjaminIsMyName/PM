@@ -129,19 +129,22 @@ function reportWindowSize() {
   setTimeout(fadeUp, 100);
 }
 
-// toggle dark and light theme (called by onclick):
+// toggle dark and light theme
 function theme() {
   let ball = document.querySelector(".ball");
   // move the ball in the toggle etc
   ball.classList.toggle("night");
   // change the theme, add to body the "dark" class
   document.querySelector("body").classList.toggle("dark");
-
+}
+// used by onClick
+function setLocalStorage() {
+  theme();
   if (document.body.classList.contains("dark"))
     localStorage.setItem("darkMode", 1);
   else localStorage.setItem("darkMode", 0);
 }
-// gwt localStorage item for 'darkMode'
+// get localStorage item for 'darkMode'
 var darkMode = localStorage.getItem("darkMode");
 // if localStorage was set to 1 (dark mode on), change to dark mode
 if (darkMode == 1) theme();
@@ -169,49 +172,6 @@ function checkIfNeedsUpdate(e) {
 
   // if you got here, go change the theme
   theme();
+  // delete localStorage, we follow the system's theme now (until he clicks on the ball)
+  localStorage.removeItem("darkMode");
 }
-
-// remove the picture-in-picture button
-document.querySelector("video").disablePictureInPicture = true;
-
-// change pm
-function replacePM(newPM) {
-  let currentPM = document.querySelector(".pm-name").classList[1].slice(0, 6);
-  if (newPM == currentPM) {
-    exitCardsScreen();
-    return;
-  }
-  // remove:
-  document.querySelector(".pm-name").classList.remove(currentPM + "-name");
-  document.querySelector(".top-image").classList.remove(currentPM + "-photo");
-  // add:
-  document.querySelector(".pm-name").classList.add(newPM + "-name");
-  document.querySelector(".top-image").classList.add(newPM + "-photo");
-  // hide articles:
-  document.querySelectorAll("." + currentPM).forEach(function (e) {
-    e.style.display = "none";
-  });
-  // show articles:
-  if (newPM == "olmert")
-    document.querySelector(".olmert").style.display = "flex";
-  else
-    document.querySelectorAll("article." + newPM + "").forEach(function (e) {
-      e.style.display = "block";
-    });
-  document.body.scrollTop = 0; // For Safari
-  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-  exitCardsScreen();
-  currentPMglobal = newPM;
-  fadeUp();
-}
-
-// change the "background" (floating div) color:
-var inputbotton = document.querySelector("article.olmert input");
-inputbotton.addEventListener(
-  "input",
-  function () {
-    var theColor = inputbotton.value;
-    document.querySelector(".half-circle").style.backgroundColor = theColor;
-  },
-  false
-);
