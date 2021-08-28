@@ -175,3 +175,48 @@ function checkIfNeedsUpdate(e) {
   // delete localStorage, we follow the system's theme now (until he clicks on the ball)
   localStorage.removeItem("darkMode");
 }
+
+// remove the picture-in-picture button
+document.querySelector("video").disablePictureInPicture = true;
+
+// change pm
+function replacePM(newPM) {
+  let currentPM = document.querySelector(".pm-name").classList[1].slice(0, 6);
+  if (newPM == currentPM) {
+    exitCardsScreen();
+    return;
+  }
+  // remove:
+  document.querySelector(".pm-name").classList.remove(currentPM + "-name");
+  document.querySelector(".top-image").classList.remove(currentPM + "-photo");
+  // add:
+  document.querySelector(".pm-name").classList.add(newPM + "-name");
+  document.querySelector(".top-image").classList.add(newPM + "-photo");
+  // hide articles:
+  document.querySelectorAll("." + currentPM).forEach(function (e) {
+    e.style.display = "none";
+  });
+  // show articles:
+  if (newPM == "olmert")
+    document.querySelector(".olmert").style.display = "flex";
+  else
+    document.querySelectorAll("article." + newPM + "").forEach(function (e) {
+      e.style.display = "block";
+    });
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  exitCardsScreen();
+  currentPMglobal = newPM;
+  fadeUp();
+}
+
+// change the "background" (floating div) color:
+var inputbotton = document.querySelector("article.olmert input");
+inputbotton.addEventListener(
+  "input",
+  function () {
+    var theColor = inputbotton.value;
+    document.querySelector(".half-circle").style.backgroundColor = theColor;
+  },
+  false
+);
